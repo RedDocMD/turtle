@@ -4,11 +4,13 @@
 #include "turtle.h"
 #include <gtkmm.h>
 #include <memory>
+#include <vector>
 
 class LogoDrawingArea : public Gtk::DrawingArea {
 public:
   LogoDrawingArea(const std::shared_ptr<Turtle> &turtle);
   virtual ~LogoDrawingArea() {}
+  void add_line(const Line &line) { lines.push_back(line); }
 
   constexpr static int TRIANGLE_HEIGHT = 10; // px
   constexpr static int TRIANGLE_WIDTH = 8;   // px
@@ -18,8 +20,11 @@ private:
                int height) const;
   void draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr, int width,
                    int height) const;
+  void draw_lines(const Cairo::RefPtr<Cairo::Context> &cr, int width,
+                  int height) const;
 
   std::shared_ptr<Turtle> turtle;
+  std::vector<Line> lines;
 };
 
 class LogoWindow : public Gtk::Window {

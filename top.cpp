@@ -12,7 +12,11 @@ void LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr,
                               int width, int height) const {
   cr->save();
   cr->set_line_width(2.0);
+  cr->set_source_rgb(1, 0, 0);
   draw_turtle(cr, width, height);
+  cr->stroke();
+  cr->set_source_rgb(0, 0, 0);
+  draw_lines(cr, width, height);
   cr->stroke();
   cr->restore();
 }
@@ -49,6 +53,19 @@ void LogoDrawingArea::draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr,
   cr->line_to(base_x, base_y);
 }
 
+void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
+                                 int width, int height) const {
+  int cx = width / 2;
+  int cy = width / 2;
+
+  for (const auto &line : lines) {
+    const auto &start = line.start;
+    const auto &end = line.end;
+    cr->move_to(cx + start.x, cy + start.y);
+    cr->line_to(cx + end.x, cy + end.y);
+  }
+}
+
 LogoWindow::LogoWindow()
     : vbox(Gtk::Orientation::VERTICAL), hbox(Gtk::Orientation::HORIZONTAL),
       run_button("Run"), turtle{std::make_shared<Turtle>()}, area{turtle} {
@@ -76,9 +93,11 @@ void LogoWindow::perform_operation(Operation &op) {
   auto old_pos = turtle->get_position();
   op.action(*turtle);
   auto new_pos = turtle->get_position();
-  if (old_pos != new_pos)
+  if (old_pos != new_pos) {
     BOOST_LOG_TRIVIAL(debug)
         << "Position changed from " << old_pos << " to " << new_pos;
+    area.add_line({old_pos, new_pos});
+  }
   area.queue_draw();
 }
 
