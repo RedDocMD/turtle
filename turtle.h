@@ -8,8 +8,8 @@ class ForwardOperation;
 class RightTurnOperation;
 
 class Turtle {
-  int x = 0;
-  int y = 0;
+  double x = 0;
+  double y = 0;
   int angle = 0;
 
   friend class ForwardOperation;
@@ -17,8 +17,8 @@ class Turtle {
 
 public:
   Turtle() = default;
-  int get_x() const { return x; }
-  int get_y() const { return y; }
+  double get_x() const { return x; }
+  double get_y() const { return y; }
   int get_angle() const { return angle; }
   Point get_position() const { return {x, y}; }
 
@@ -26,8 +26,8 @@ public:
   constexpr static int SCALE_FACTOR = 5;
 
 private:
-  void set_x(int x) { this->x = x; }
-  void set_y(int y) { this->y = y; }
+  void set_x(double x) { this->x = x; }
+  void set_y(double y) { this->y = y; }
   void set_angle(int angle) { this->angle = angle; }
 };
 

@@ -6,6 +6,7 @@ LogoDrawingArea::LogoDrawingArea(const std::shared_ptr<Turtle> &turtle)
     : turtle{turtle} {
   set_draw_func(sigc::mem_fun(*this, &LogoDrawingArea::on_draw));
   set_size_request(LogoWindow::WIDTH, LogoWindow::HEIGHT);
+  set_vexpand(true);
 }
 
 void LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr,
@@ -24,10 +25,10 @@ void LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr,
 void LogoDrawingArea::draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr,
                                   int width, int height) const {
   int cx = width / 2;
-  int cy = width / 2;
+  int cy = height / 2;
 
-  int base_x = cx + turtle->get_x();
-  int base_y = cy + turtle->get_y();
+  double base_x = cx + turtle->get_x();
+  double base_y = cy + turtle->get_y();
 
   double theta = static_cast<double>(turtle->get_angle()) * M_PI / 180.0;
   double theta_left = theta - M_PI_2;
@@ -56,7 +57,7 @@ void LogoDrawingArea::draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr,
 void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
                                  int width, int height) const {
   int cx = width / 2;
-  int cy = width / 2;
+  int cy = height / 2;
 
   for (const auto &line : lines) {
     const auto &start = line.start;
@@ -72,7 +73,7 @@ LogoWindow::LogoWindow()
   set_title("LOGO");
   set_child(vbox);
 
-  cmd_entry.set_expand(true);
+  cmd_entry.set_hexpand(true);
   cmd_entry.set_margin_end(15);
   cmd_entry.set_margin_bottom(20);
   cmd_entry.set_margin_start(20);
@@ -102,8 +103,14 @@ void LogoWindow::perform_operation(Operation &op) {
 }
 
 void LogoWindow::on_run() {
-  auto fd20 = ForwardOperation(20);
-  auto rt120 = RightTurnOperation(120);
-  perform_operation(fd20);
-  perform_operation(rt120);
+  // auto fd20 = ForwardOperation(20);
+  // auto rt120 = RightTurnOperation(120);
+  // perform_operation(fd20);
+  // perform_operation(rt120);
+  auto fd1 = ForwardOperation(1);
+  auto rt1 = RightTurnOperation(1);
+  for (int i = 0; i < 360; i++) {
+    perform_operation(fd1);
+    perform_operation(rt1);
+  }
 }

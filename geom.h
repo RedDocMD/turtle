@@ -4,8 +4,8 @@
 #include <ostream>
 
 struct Point {
-  int x, y;
-  Point(int x, int y) : x{x}, y{y} {}
+  double x, y;
+  Point(double x, double y) : x{x}, y{y} {}
   bool operator==(const Point &ot) { return x == ot.x && y == ot.y; }
   bool operator!=(const Point &ot) { return x != ot.x || y != ot.y; }
 };
