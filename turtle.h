@@ -1,6 +1,7 @@
 #ifndef __TURTLE_H__
 #define __TURTLE_H__
 
+#include "geom.h"
 #include <utility>
 
 class ForwardOperation;
@@ -19,7 +20,7 @@ public:
   int get_x() const { return x; }
   int get_y() const { return y; }
   int get_angle() const { return angle; }
-  std::pair<int, int> get_position() const { return {x, y}; }
+  Point get_position() const { return {x, y}; }
 
   // 1 unit of LOGO corresponds to SCALE_FACTOR px
   constexpr static int SCALE_FACTOR = 5;

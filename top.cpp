@@ -10,9 +10,11 @@ LogoDrawingArea::LogoDrawingArea(const std::shared_ptr<Turtle> &turtle)
 
 void LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr,
                               int width, int height) const {
-  cr->set_line_width(2.5);
+  cr->save();
+  cr->set_line_width(2.0);
   draw_turtle(cr, width, height);
   cr->stroke();
+  cr->restore();
 }
 
 void LogoDrawingArea::draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr,
@@ -76,8 +78,7 @@ void LogoWindow::perform_operation(Operation &op) {
   auto new_pos = turtle->get_position();
   if (old_pos != new_pos)
     BOOST_LOG_TRIVIAL(debug)
-        << "Position changed from (" << old_pos.first << ", " << old_pos.second
-        << ") to (" << new_pos.first << ", " << new_pos.second << ")";
+        << "Position changed from " << old_pos << " to " << new_pos;
   area.queue_draw();
 }
 

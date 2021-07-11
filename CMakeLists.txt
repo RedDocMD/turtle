@@ -10,6 +10,8 @@ set(SOURCES
     top.h
     turtle.cpp
     turtle.h
+    geom.h
+    geom.cpp
 )
 add_executable(turtle ${SOURCES} main.cpp)
 target_compile_options(turtle PRIVATE -Wall -Werror -pedantic -std=c++17)

@@ -11,11 +11,13 @@ public:
   virtual ~LogoDrawingArea() {}
 
   constexpr static int TRIANGLE_HEIGHT = 10; // px
-  constexpr static int TRIANGLE_WIDTH = 10; // px
+  constexpr static int TRIANGLE_WIDTH = 8;   // px
 
 private:
-  void on_draw(const Cairo::RefPtr<Cairo::Context> &cr, int width, int height) const;
-  void draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr, int width, int height) const;
+  void on_draw(const Cairo::RefPtr<Cairo::Context> &cr, int width,
+               int height) const;
+  void draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr, int width,
+                   int height) const;
 
   std::shared_ptr<Turtle> turtle;
 };
