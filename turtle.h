@@ -5,7 +5,9 @@
 #include <utility>
 
 class ForwardOperation;
+class BackwardOperation;
 class RightTurnOperation;
+class LeftTurnOperation;
 
 class Turtle {
   double x = 0;
@@ -13,7 +15,9 @@ class Turtle {
   int angle = 0;
 
   friend class ForwardOperation;
+  friend class BackwardOperation;
   friend class RightTurnOperation;
+  friend class LeftTurnOperation;
 
 public:
   Turtle() = default;
@@ -46,12 +50,30 @@ public:
   void action(Turtle &turtle) const override;
 };
 
+class BackwardOperation : public Operation {
+  int amt;
+
+public:
+  explicit BackwardOperation(int amt) : amt{amt} {}
+  ~BackwardOperation() {}
+  void action(Turtle &turtle) const override;
+};
+
 class RightTurnOperation : public Operation {
   int angle;
 
 public:
   explicit RightTurnOperation(int angle) : angle{angle} {}
   ~RightTurnOperation() {}
+  void action(Turtle &turtle) const override;
+};
+
+class LeftTurnOperation : public Operation {
+  int angle;
+
+public:
+  explicit LeftTurnOperation(int angle) : angle{angle} {}
+  ~LeftTurnOperation() {}
   void action(Turtle &turtle) const override;
 };
 
