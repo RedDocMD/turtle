@@ -1,5 +1,6 @@
 #include "top.h"
 #include <cmath>
+#include <iostream>
 
 LogoDrawingArea::LogoDrawingArea(const std::shared_ptr<Turtle> &turtle)
     : turtle{turtle} {
@@ -21,25 +22,29 @@ void LogoDrawingArea::draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr,
 
   int base_x = cx + turtle->get_x();
   int base_y = cy + turtle->get_y();
-  
-  double theta = turtle->get_angle() * M_PI / 180.0;
+
+  double theta = static_cast<double>(turtle->get_angle()) * M_PI / 180.0;
   double theta_left = theta - M_PI_2;
   double theta_right = theta + M_PI_2;
 
-  double x_left = base_x - LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * cos(theta_left);
-  double y_left = base_y + LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * sin(theta_left);
+  double x_left =
+      base_x + LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * sin(theta_left);
+  double y_left =
+      base_y - LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * cos(theta_left);
 
-  double x_right = base_x - LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * cos(theta_right);
-  double y_right = base_y + LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * sin(theta_right);
+  double x_right =
+      base_x + LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * sin(theta_right);
+  double y_right =
+      base_y - LogoDrawingArea::TRIANGLE_WIDTH / 2.0 * cos(theta_right);
 
-  double x_top = base_x - LogoDrawingArea::TRIANGLE_HEIGHT * cos(theta);
-  double y_top = base_y + LogoDrawingArea::TRIANGLE_HEIGHT * sin(theta);
+  double x_top = base_x + LogoDrawingArea::TRIANGLE_HEIGHT * sin(theta);
+  double y_top = base_y - LogoDrawingArea::TRIANGLE_HEIGHT * cos(theta);
 
-  cr->move_to(base_y, base_x);
-  cr->line_to(y_left, x_left);
-  cr->line_to(y_top, x_top);
-  cr->line_to(y_right, x_right);
-  cr->line_to(base_y, base_x);
+  cr->move_to(base_x, base_y);
+  cr->line_to(x_left, y_left);
+  cr->line_to(x_top, y_top);
+  cr->line_to(x_right, y_right);
+  cr->line_to(base_x, base_y);
 }
 
 LogoWindow::LogoWindow()
@@ -56,9 +61,28 @@ LogoWindow::LogoWindow()
   run_button.set_margin_start(15);
   run_button.set_margin_bottom(20);
   run_button.set_margin_end(20);
+  run_button.signal_clicked().connect(
+      sigc::mem_fun(*this, &LogoWindow::on_run));
 
   vbox.append(area);
   vbox.append(hbox);
   hbox.append(cmd_entry);
   hbox.append(run_button);
+}
+
+void LogoWindow::perform_operation(Operation &op) {
+  auto old_pos = turtle->get_position();
+  op.action(*turtle);
+  auto new_pos = turtle->get_position();
+  if (old_pos != new_pos)
+    std::cout << "Position changed from ("
+              << old_pos.first << ", " << old_pos.second << ") to (" << new_pos.first << ", " << new_pos.second << ")\n";
+  area.queue_draw();
+}
+
+void LogoWindow::on_run() {
+  auto fd20 = ForwardOperation(20);
+  auto rt90 = RightTurnOperation(90);
+  perform_operation(fd20);
+  perform_operation(rt90);
 }

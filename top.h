@@ -10,9 +10,6 @@ public:
   LogoDrawingArea(const std::shared_ptr<Turtle> &turtle);
   virtual ~LogoDrawingArea() {}
 
-  // 1 unit of LOGO corresponds to SCALE_FACTOR px
-  constexpr static int SCALE_FACTOR = 5;
-
   constexpr static int TRIANGLE_HEIGHT = 10; // px
   constexpr static int TRIANGLE_WIDTH = 10; // px
 
@@ -31,6 +28,9 @@ public:
   constexpr static int HEIGHT = 500;
 
 private:
+  void perform_operation(Operation &op);
+  void on_run();
+
   Gtk::Box vbox;
   Gtk::Box hbox;
   Gtk::Button run_button;
