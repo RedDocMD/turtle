@@ -91,26 +91,32 @@ LogoWindow::LogoWindow()
 }
 
 void LogoWindow::perform_operation(Operation &op) {
-  auto old_pos = turtle->get_position();
-  op.action(*turtle);
-  auto new_pos = turtle->get_position();
-  if (old_pos != new_pos) {
-    BOOST_LOG_TRIVIAL(debug)
-        << "Position changed from " << old_pos << " to " << new_pos;
-    area.add_line({old_pos, new_pos});
+  if (const auto *rep = dynamic_cast<RepeatOperation *>(&op)) {
+    for (int i = 0, cnt = rep->get_cnt(); i < cnt; ++i)
+      for (const auto &op : rep->get_ops())
+        perform_operation(*op);
+  } else {
+    auto old_pos = turtle->get_position();
+    op.action(*turtle);
+    auto new_pos = turtle->get_position();
+    if (old_pos != new_pos) {
+      BOOST_LOG_TRIVIAL(debug)
+          << "Position changed from " << old_pos << " to " << new_pos;
+      area.add_line({old_pos, new_pos});
+    }
   }
   area.queue_draw();
 }
 
 void LogoWindow::on_run() {
-  // auto fd20 = ForwardOperation(20);
-  // auto rt120 = RightTurnOperation(120);
-  // perform_operation(fd20);
-  // perform_operation(rt120);
-  auto fd1 = ForwardOperation(1);
-  auto rt1 = RightTurnOperation(1);
-  for (int i = 0; i < 360; i++) {
-    perform_operation(fd1);
-    perform_operation(rt1);
+  const auto &comm = cmd_entry.get_text();
+  const auto op = interpreter.interpret(comm);
+  if (op) {
+    BOOST_LOG_TRIVIAL(debug) << **op;
+    perform_operation(**op);
+    cmd_entry.set_text("");
+  } else {
+    BOOST_LOG_TRIVIAL(info)
+        << "failed to interpret command: \"" << comm << "\"";
   }
 }

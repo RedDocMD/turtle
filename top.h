@@ -2,6 +2,7 @@
 #define __TOP_H__
 
 #include "turtle.h"
+#include "interpreter.h"
 #include <gtkmm.h>
 #include <memory>
 #include <vector>
@@ -44,6 +45,7 @@ private:
   Gtk::Entry cmd_entry;
   std::shared_ptr<Turtle> turtle;
   LogoDrawingArea area;
+  Interpreter interpreter;
 };
 
 #endif // __TOP_H__

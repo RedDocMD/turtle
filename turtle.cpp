@@ -13,6 +13,8 @@ void ForwardOperation::action(Turtle &turtle) const {
   turtle.set_y(new_y);
 }
 
+void ForwardOperation::write(std::ostream &os) const { os << "FD " << amt; }
+
 void BackwardOperation::action(Turtle &turtle) const {
   double old_x = turtle.get_x();
   double old_y = turtle.get_y();
@@ -25,11 +27,15 @@ void BackwardOperation::action(Turtle &turtle) const {
   turtle.set_y(new_y);
 }
 
+void BackwardOperation::write(std::ostream &os) const { os << "BK " << amt; }
+
 void RightTurnOperation::action(Turtle &turtle) const {
   int old_angle = turtle.get_angle();
   int new_angle = old_angle + angle;
   turtle.set_angle(new_angle);
 }
+
+void RightTurnOperation::write(std::ostream &os) const { os << "RT " << angle; }
 
 void LeftTurnOperation::action(Turtle &turtle) const {
   int old_angle = turtle.get_angle();
@@ -37,10 +43,20 @@ void LeftTurnOperation::action(Turtle &turtle) const {
   turtle.set_angle(new_angle);
 }
 
+void LeftTurnOperation::write(std::ostream &os) const { os << "LT " << angle; }
+
 void RepeatOperation::action(Turtle &turtle) const {
-  for (auto i = 0; i < cnt; ++i) {
-    for (const auto &op : ops) {
-      op->action(turtle);
-    }
-  }
+  throw "don't call action on Repeat Operation\n";
+}
+
+void RepeatOperation::write(std::ostream &os) const {
+  os << "REPEAT " << cnt << " (";
+  for (const auto &op : ops)
+    os << *op << ", ";
+  os << ")";
+}
+
+std::ostream &operator<<(std::ostream &os, const Operation &op) {
+  op.write(os);
+  return os;
 }

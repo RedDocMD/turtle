@@ -29,7 +29,7 @@ public:
   Point get_position() const { return {x, y}; }
 
   // 1 unit of LOGO corresponds to SCALE_FACTOR px
-  constexpr static int SCALE_FACTOR = 5;
+  constexpr static int SCALE_FACTOR = 2;
 
 private:
   void set_x(double x) { this->x = x; }
@@ -41,7 +41,10 @@ class Operation {
 public:
   virtual ~Operation() = default;
   virtual void action(Turtle &turtle) const = 0;
+  virtual void write(std::ostream &os) const = 0;
 };
+
+std::ostream &operator<<(std::ostream &os, const Operation &op);
 
 class ForwardOperation : public Operation {
   int amt;
@@ -50,6 +53,7 @@ public:
   explicit ForwardOperation(int amt) : amt{amt} {}
   ~ForwardOperation() = default;
   void action(Turtle &turtle) const override;
+  void write(std::ostream &os) const override;
 };
 
 class BackwardOperation : public Operation {
@@ -59,6 +63,7 @@ public:
   explicit BackwardOperation(int amt) : amt{amt} {}
   ~BackwardOperation() = default;
   void action(Turtle &turtle) const override;
+  void write(std::ostream &os) const override;
 };
 
 class RightTurnOperation : public Operation {
@@ -68,6 +73,7 @@ public:
   explicit RightTurnOperation(int angle) : angle{angle} {}
   ~RightTurnOperation() = default;
   void action(Turtle &turtle) const override;
+  void write(std::ostream &os) const override;
 };
 
 class LeftTurnOperation : public Operation {
@@ -77,6 +83,7 @@ public:
   explicit LeftTurnOperation(int angle) : angle{angle} {}
   ~LeftTurnOperation() = default;
   void action(Turtle &turtle) const override;
+  void write(std::ostream &os) const override;
 };
 
 class RepeatOperation : public Operation {
@@ -88,6 +95,9 @@ public:
       : cnt{cnt}, ops(std::move(ops)) {}
   ~RepeatOperation() = default;
   void action(Turtle &turtle) const override;
+  void write(std::ostream &os) const override;
+  int get_cnt() const { return cnt; }
+  const std::vector<std::unique_ptr<Operation>> &get_ops() const { return ops; }
 };
 
 #endif // __TURTLE_H__
