@@ -12,8 +12,10 @@ set(SOURCES
     turtle.h
     geom.h
     geom.cpp
+    interpreter.h
+    interpreter.cpp
 )
 add_executable(turtle ${SOURCES} main.cpp)
-target_compile_options(turtle PRIVATE -Wall -Werror -pedantic -std=c++17)
+target_compile_options(turtle PRIVATE -Wall -pedantic -std=c++17)
 target_link_libraries(turtle PRIVATE ${GTKMM_LIBRARIES} ${Boost_LIBRARIES})
 target_include_directories(turtle PRIVATE ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})

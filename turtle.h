@@ -2,7 +2,9 @@
 #define __TURTLE_H__
 
 #include "geom.h"
+#include <memory>
 #include <utility>
+#include <vector>
 
 class ForwardOperation;
 class BackwardOperation;
@@ -37,7 +39,7 @@ private:
 
 class Operation {
 public:
-  virtual ~Operation() {}
+  virtual ~Operation() = default;
   virtual void action(Turtle &turtle) const = 0;
 };
 
@@ -46,7 +48,7 @@ class ForwardOperation : public Operation {
 
 public:
   explicit ForwardOperation(int amt) : amt{amt} {}
-  ~ForwardOperation() {}
+  ~ForwardOperation() = default;
   void action(Turtle &turtle) const override;
 };
 
@@ -55,7 +57,7 @@ class BackwardOperation : public Operation {
 
 public:
   explicit BackwardOperation(int amt) : amt{amt} {}
-  ~BackwardOperation() {}
+  ~BackwardOperation() = default;
   void action(Turtle &turtle) const override;
 };
 
@@ -64,7 +66,7 @@ class RightTurnOperation : public Operation {
 
 public:
   explicit RightTurnOperation(int angle) : angle{angle} {}
-  ~RightTurnOperation() {}
+  ~RightTurnOperation() = default;
   void action(Turtle &turtle) const override;
 };
 
@@ -73,7 +75,18 @@ class LeftTurnOperation : public Operation {
 
 public:
   explicit LeftTurnOperation(int angle) : angle{angle} {}
-  ~LeftTurnOperation() {}
+  ~LeftTurnOperation() = default;
+  void action(Turtle &turtle) const override;
+};
+
+class RepeatOperation : public Operation {
+  int cnt;
+  std::vector<std::unique_ptr<Operation>> ops;
+
+public:
+  explicit RepeatOperation(int cnt, std::vector<std::unique_ptr<Operation>> ops)
+      : cnt{cnt}, ops(std::move(ops)) {}
+  ~RepeatOperation() = default;
   void action(Turtle &turtle) const override;
 };
 

@@ -36,3 +36,11 @@ void LeftTurnOperation::action(Turtle &turtle) const {
   int new_angle = old_angle - angle;
   turtle.set_angle(new_angle);
 }
+
+void RepeatOperation::action(Turtle &turtle) const {
+  for (auto i = 0; i < cnt; ++i) {
+    for (const auto &op : ops) {
+      op->action(turtle);
+    }
+  }
+}
