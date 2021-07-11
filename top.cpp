@@ -1,6 +1,6 @@
 #include "top.h"
+#include <boost/log/trivial.hpp>
 #include <cmath>
-#include <iostream>
 
 LogoDrawingArea::LogoDrawingArea(const std::shared_ptr<Turtle> &turtle)
     : turtle{turtle} {
@@ -75,14 +75,15 @@ void LogoWindow::perform_operation(Operation &op) {
   op.action(*turtle);
   auto new_pos = turtle->get_position();
   if (old_pos != new_pos)
-    std::cout << "Position changed from ("
-              << old_pos.first << ", " << old_pos.second << ") to (" << new_pos.first << ", " << new_pos.second << ")\n";
+    BOOST_LOG_TRIVIAL(debug)
+        << "Position changed from (" << old_pos.first << ", " << old_pos.second
+        << ") to (" << new_pos.first << ", " << new_pos.second << ")";
   area.queue_draw();
 }
 
 void LogoWindow::on_run() {
   auto fd20 = ForwardOperation(20);
-  auto rt90 = RightTurnOperation(90);
+  auto rt120 = RightTurnOperation(120);
   perform_operation(fd20);
-  perform_operation(rt90);
+  perform_operation(rt120);
 }
