@@ -17,4 +17,4 @@ struct Line {
   Line(Point start, Point end) : start{start}, end{end} {}
 };
 
-#endif // __GEOM_H__
+#endif  // __GEOM_H__

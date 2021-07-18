@@ -1,4 +1,5 @@
 #include "turtle.h"
+
 #include <cmath>
 
 void ForwardOperation::action(Turtle &turtle) const {
@@ -51,8 +52,7 @@ void RepeatOperation::action(Turtle &turtle) const {
 
 void RepeatOperation::write(std::ostream &os) const {
   os << "REPEAT " << cnt << " (";
-  for (const auto &op : ops)
-    os << *op << ", ";
+  for (const auto &op : ops) os << *op << ", ";
   os << ")";
 }
 

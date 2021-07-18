@@ -1,4 +1,5 @@
 #include "top.h"
+
 #include <boost/log/trivial.hpp>
 #include <cmath>
 
@@ -68,8 +69,11 @@ void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
 }
 
 LogoWindow::LogoWindow()
-    : vbox(Gtk::Orientation::VERTICAL), hbox(Gtk::Orientation::HORIZONTAL),
-      run_button("Run"), turtle{std::make_shared<Turtle>()}, area{turtle} {
+    : vbox(Gtk::Orientation::VERTICAL),
+      hbox(Gtk::Orientation::HORIZONTAL),
+      run_button("Run"),
+      turtle{std::make_shared<Turtle>()},
+      area{turtle} {
   set_title("LOGO");
   set_child(vbox);
 
@@ -93,8 +97,7 @@ LogoWindow::LogoWindow()
 void LogoWindow::perform_operation(Operation &op) {
   if (const auto *rep = dynamic_cast<RepeatOperation *>(&op)) {
     for (int i = 0, cnt = rep->get_cnt(); i < cnt; ++i)
-      for (const auto &op : rep->get_ops())
-        perform_operation(*op);
+      for (const auto &op : rep->get_ops()) perform_operation(*op);
   } else {
     auto old_pos = turtle->get_position();
     op.action(*turtle);
@@ -112,8 +115,8 @@ void LogoWindow::on_run() {
   const auto &comm = cmd_entry.get_text();
   const auto op = interpreter.interpret(comm);
   if (op) {
-    BOOST_LOG_TRIVIAL(debug) << **op;
-    perform_operation(**op);
+    BOOST_LOG_TRIVIAL(debug) << *op;
+    perform_operation(*op);
     cmd_entry.set_text("");
   } else {
     BOOST_LOG_TRIVIAL(info)

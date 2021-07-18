@@ -6,15 +6,15 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
 find_package(Boost COMPONENTS log REQUIRED)
 
 set(SOURCES
-    top.cpp
-    top.h
-    turtle.cpp
-    turtle.h
-    geom.h
-    geom.cpp
-    interpreter.h
-    interpreter.cpp
-)
+        top.cpp
+        top.h
+        turtle.cpp
+        turtle.h
+        geom.h
+        geom.cpp
+        interpreter.h
+        interpreter.cpp
+        )
 add_executable(turtle ${SOURCES} main.cpp)
 target_compile_options(turtle PRIVATE -Wall -pedantic -std=c++17)
 target_link_libraries(turtle PRIVATE ${GTKMM_LIBRARIES} ${Boost_LIBRARIES})

@@ -1,10 +1,11 @@
 #ifndef __TURTLE_H__
 #define __TURTLE_H__
 
-#include "geom.h"
 #include <memory>
 #include <utility>
 #include <vector>
+
+#include "geom.h"
 
 class ForwardOperation;
 class BackwardOperation;
@@ -21,7 +22,7 @@ class Turtle {
   friend class RightTurnOperation;
   friend class LeftTurnOperation;
 
-public:
+ public:
   Turtle() = default;
   double get_x() const { return x; }
   double get_y() const { return y; }
@@ -31,14 +32,14 @@ public:
   // 1 unit of LOGO corresponds to SCALE_FACTOR px
   constexpr static int SCALE_FACTOR = 2;
 
-private:
+ private:
   void set_x(double x) { this->x = x; }
   void set_y(double y) { this->y = y; }
   void set_angle(int angle) { this->angle = angle; }
 };
 
 class Operation {
-public:
+ public:
   virtual ~Operation() = default;
   virtual void action(Turtle &turtle) const = 0;
   virtual void write(std::ostream &os) const = 0;
@@ -49,7 +50,7 @@ std::ostream &operator<<(std::ostream &os, const Operation &op);
 class ForwardOperation : public Operation {
   int amt;
 
-public:
+ public:
   explicit ForwardOperation(int amt) : amt{amt} {}
   ~ForwardOperation() = default;
   void action(Turtle &turtle) const override;
@@ -59,7 +60,7 @@ public:
 class BackwardOperation : public Operation {
   int amt;
 
-public:
+ public:
   explicit BackwardOperation(int amt) : amt{amt} {}
   ~BackwardOperation() = default;
   void action(Turtle &turtle) const override;
@@ -69,7 +70,7 @@ public:
 class RightTurnOperation : public Operation {
   int angle;
 
-public:
+ public:
   explicit RightTurnOperation(int angle) : angle{angle} {}
   ~RightTurnOperation() = default;
   void action(Turtle &turtle) const override;
@@ -79,7 +80,7 @@ public:
 class LeftTurnOperation : public Operation {
   int angle;
 
-public:
+ public:
   explicit LeftTurnOperation(int angle) : angle{angle} {}
   ~LeftTurnOperation() = default;
   void action(Turtle &turtle) const override;
@@ -90,7 +91,7 @@ class RepeatOperation : public Operation {
   int cnt;
   std::vector<std::unique_ptr<Operation>> ops;
 
-public:
+ public:
   explicit RepeatOperation(int cnt, std::vector<std::unique_ptr<Operation>> ops)
       : cnt{cnt}, ops(std::move(ops)) {}
   ~RepeatOperation() = default;
@@ -100,4 +101,4 @@ public:
   const std::vector<std::unique_ptr<Operation>> &get_ops() const { return ops; }
 };
 
-#endif // __TURTLE_H__
+#endif  // __TURTLE_H__
