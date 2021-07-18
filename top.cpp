@@ -2,9 +2,10 @@
 
 #include <boost/log/trivial.hpp>
 #include <cmath>
+#include <utility>
 
-LogoDrawingArea::LogoDrawingArea(const std::shared_ptr<Turtle> &turtle)
-    : turtle{turtle} {
+LogoDrawingArea::LogoDrawingArea(std::shared_ptr<Turtle> turtle)
+    : turtle{std::move(turtle)} {
   set_draw_func(sigc::mem_fun(*this, &LogoDrawingArea::on_draw));
   set_size_request(LogoWindow::WIDTH, LogoWindow::HEIGHT);
   set_vexpand(true);
@@ -97,7 +98,7 @@ LogoWindow::LogoWindow()
 void LogoWindow::perform_operation(Operation &op) {
   if (const auto *rep = dynamic_cast<RepeatOperation *>(&op)) {
     for (int i = 0, cnt = rep->get_cnt(); i < cnt; ++i)
-      for (const auto &op : rep->get_ops()) perform_operation(*op);
+      for (const auto &sub_op : rep->get_ops()) perform_operation(*sub_op);
   } else {
     auto old_pos = turtle->get_position();
     op.action(*turtle);

@@ -11,8 +11,8 @@
 
 class LogoDrawingArea : public Gtk::DrawingArea {
  public:
-  LogoDrawingArea(const std::shared_ptr<Turtle> &turtle);
-  virtual ~LogoDrawingArea() {}
+  explicit LogoDrawingArea(std::shared_ptr<Turtle> turtle);
+  ~LogoDrawingArea() override = default;
   void add_line(const Line &line) { lines.push_back(line); }
 
   constexpr static int TRIANGLE_HEIGHT = 10;  // px
