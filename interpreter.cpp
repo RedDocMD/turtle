@@ -41,6 +41,11 @@ std::unique_ptr<Operation> Interpreter::interpret_single(
 
     std::string tok;
     ss >> tok;
+    if (*tok.rbegin() == ',' || *tok.rbegin() == ')') {
+      tok.pop_back();
+      ss.unget();
+    }
+    BOOST_LOG_TRIVIAL(debug) << "Command number: \"" << tok << "\"";
     switch (type) {
       case CommandType::Fd: {
         int amt = boost::lexical_cast<int>(tok);
@@ -59,7 +64,7 @@ std::unique_ptr<Operation> Interpreter::interpret_single(
         return std::make_unique<LeftTurnOperation>(angle);
       }
       default:
-        BOOST_ASSERT_MSG(type != CommandType::Repeat,
+        BOOST_ASSERT_MSG(type == CommandType::Repeat,
                          "Expected type to be repeat");
     }
 
@@ -88,9 +93,7 @@ std::unique_ptr<RepeatOperation> Interpreter::interpret_repeat(
     ss >> c;
     if (c == ')')
       return std::make_unique<RepeatOperation>(cnt, std::move(ops));
-    else if (c == ',')
-      ss >> std::skipws;
-    else
+    else if (c != ',')
       return {};
   }
 }
