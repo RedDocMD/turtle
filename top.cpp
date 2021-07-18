@@ -113,7 +113,7 @@ void LogoWindow::perform_operation(Operation &op) {
 
 void LogoWindow::on_run() {
   const auto &comm = cmd_entry.get_text();
-  const auto op = interpreter.interpret(comm);
+  const auto op = Interpreter::interpret(comm);
   if (op) {
     BOOST_LOG_TRIVIAL(debug) << *op;
     perform_operation(*op);

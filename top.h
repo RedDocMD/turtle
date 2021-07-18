@@ -47,7 +47,6 @@ class LogoWindow : public Gtk::Window {
   Gtk::Entry cmd_entry;
   std::shared_ptr<Turtle> turtle;
   LogoDrawingArea area;
-  Interpreter interpreter;
 };
 
 #endif  // __TOP_H__

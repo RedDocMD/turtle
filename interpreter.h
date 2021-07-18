@@ -23,6 +23,10 @@ class Interpreter {
       std::stringstream &ss, int cnt);
 
  public:
+  Interpreter() = delete;
+  Interpreter(const Interpreter &) = delete;
+  Interpreter(Interpreter &&) = delete;
+  ~Interpreter() = delete;
   static std::unique_ptr<Operation> interpret(const std::string &command);
 };
 
