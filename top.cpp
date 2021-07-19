@@ -108,6 +108,8 @@ LogoWindow::LogoWindow()
   cmd_entry.set_margin_start(20);
   cmd_entry.signal_activate().connect(
       sigc::mem_fun(*this, &LogoWindow::on_run));
+  cmd_entry.signal_changed().connect(
+      sigc::mem_fun(*this, &LogoWindow::on_entry_changed));
 
   run_button.set_margin_start(15);
   run_button.set_margin_bottom(20);
@@ -157,4 +159,9 @@ void LogoWindow::on_run() {
     BOOST_LOG_TRIVIAL(info)
         << "failed to interpret command: \"" << comm << "\"";
   }
+}
+
+void LogoWindow::on_entry_changed() {
+  auto text = cmd_entry.get_text();
+  cmd_entry.set_text(text.uppercase());
 }

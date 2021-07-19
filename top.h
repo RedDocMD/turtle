@@ -58,6 +58,7 @@ class LogoWindow : public Gtk::Window {
  private:
   void perform_operation(Operation &op);
   void on_run();
+  void on_entry_changed();
 
   Gtk::VBox vbox;
   Gtk::HBox hbox;
