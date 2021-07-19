@@ -63,6 +63,7 @@ class LogoWindow : public Gtk::Window {
 
   Gtk::Button run_button;
   Gtk::Entry cmd_entry;
+  Gtk::Label err_label;
 
   std::shared_ptr<Turtle> turtle;
   LogoDrawingArea area;

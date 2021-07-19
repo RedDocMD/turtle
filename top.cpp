@@ -121,6 +121,10 @@ LogoWindow::LogoWindow()
   run_button.signal_clicked().connect(
       sigc::mem_fun(*this, &LogoWindow::on_run));
 
+  err_label.set_margin_bottom(20);
+  err_label.set_margin_left(20);
+  err_label.set_alignment(0);
+
   area_frame->add(area);
   vbox->pack_start(*area_frame);
   area.show();
@@ -131,6 +135,8 @@ LogoWindow::LogoWindow()
   hbox->pack_start(run_button, Gtk::PACK_SHRINK);
   run_button.show();
   hbox->show();
+  vbox->pack_start(err_label, Gtk::PACK_SHRINK);
+  err_label.show();
   vbox->show();
   show();
 }
@@ -165,9 +171,13 @@ void LogoWindow::on_run() {
     BOOST_LOG_TRIVIAL(debug) << *op;
     perform_operation(*op);
     cmd_entry.set_text("");
+    err_label.set_text("");
   } else {
     BOOST_LOG_TRIVIAL(info)
         << "failed to interpret command: \"" << comm << "\"";
+    err_label.set_markup(
+        "<span foreground='red' weight='bold' font='12'>Invalid "
+        "command</span>");
   }
 }
 
