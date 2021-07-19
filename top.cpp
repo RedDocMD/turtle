@@ -95,13 +95,17 @@ void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
 LogoWindow::LogoWindow()
     : run_button("Run"), turtle{std::make_shared<Turtle>()}, area{turtle} {
   set_title("LOGO");
-  this->add(vbox);
+  auto vbox = Gtk::make_managed<Gtk::VBox>();
+  auto hbox = Gtk::make_managed<Gtk::HBox>();
+  auto area_frame = Gtk::make_managed<Gtk::Frame>();
 
-  area_frame.set_margin_top(20);
-  area_frame.set_margin_bottom(20);
-  area_frame.set_margin_right(20);
-  area_frame.set_margin_left(20);
-  area_frame.set_shadow_type(Gtk::SHADOW_ETCHED_IN);
+  this->add(*vbox);
+
+  area_frame->set_margin_top(20);
+  area_frame->set_margin_bottom(20);
+  area_frame->set_margin_right(20);
+  area_frame->set_margin_left(20);
+  area_frame->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
 
   cmd_entry.set_margin_end(15);
   cmd_entry.set_margin_bottom(20);
@@ -117,17 +121,17 @@ LogoWindow::LogoWindow()
   run_button.signal_clicked().connect(
       sigc::mem_fun(*this, &LogoWindow::on_run));
 
-  area_frame.add(area);
-  vbox.pack_start(area_frame);
+  area_frame->add(area);
+  vbox->pack_start(*area_frame);
   area.show();
-  area_frame.show();
-  vbox.pack_start(hbox, Gtk::PACK_SHRINK);
-  hbox.pack_start(cmd_entry);
+  area_frame->show();
+  vbox->pack_start(*hbox, Gtk::PACK_SHRINK);
+  hbox->pack_start(cmd_entry);
   cmd_entry.show();
-  hbox.pack_start(run_button, Gtk::PACK_SHRINK);
+  hbox->pack_start(run_button, Gtk::PACK_SHRINK);
   run_button.show();
-  hbox.show();
-  vbox.show();
+  hbox->show();
+  vbox->show();
   show();
 }
 
