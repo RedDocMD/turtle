@@ -33,6 +33,7 @@ class Interpreter {
     Rt,
     Lt,
     Repeat,
+    Cls,
     Error,
   };
 

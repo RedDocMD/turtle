@@ -34,22 +34,22 @@ std::unique_ptr<Operation> Interpreter::interpret(const std::string &command) {
 
 Interpreter::CommandType Interpreter::interpret_command_type(
     std::stringstream &ss) {
-  CommandType comm_type;
   std::string comm_name;
   ss >> comm_name;
   if (comm_name == "FD")
-    comm_type = CommandType::Fd;
+    return CommandType::Fd;
   else if (comm_name == "BK")
-    comm_type = CommandType::Bk;
+    return CommandType::Bk;
   else if (comm_name == "RT")
-    comm_type = CommandType::Rt;
+    return CommandType::Rt;
   else if (comm_name == "LT")
-    comm_type = CommandType::Lt;
+    return CommandType::Lt;
   else if (comm_name == "REPEAT")
-    comm_type = CommandType::Repeat;
+    return CommandType::Repeat;
+  else if (comm_name == "CLS")
+    return CommandType::Cls;
   else
-    comm_type = CommandType::Error;
-  return comm_type;
+    return CommandType::Error;
 }
 
 std::unique_ptr<Operation> Interpreter::interpret_single(
@@ -57,6 +57,7 @@ std::unique_ptr<Operation> Interpreter::interpret_single(
   try {
     auto type = interpret_command_type(ss);
     if (type == CommandType::Error) return {};
+    if (type == CommandType::Cls) return std::make_unique<ClearScreenOperation>();
 
     std::string tok;
     ss >> tok;

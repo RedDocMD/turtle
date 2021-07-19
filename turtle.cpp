@@ -20,6 +20,7 @@
 #include "turtle.h"
 
 #include <cmath>
+#include <boost/assert.hpp>
 
 void ForwardOperation::action(Turtle &turtle) const {
   double old_x = turtle.get_x();
@@ -66,7 +67,7 @@ void LeftTurnOperation::action(Turtle &turtle) const {
 void LeftTurnOperation::write(std::ostream &os) const { os << "LT " << angle; }
 
 void RepeatOperation::action(Turtle &turtle) const {
-  throw "don't call action on Repeat Operation\n";
+  BOOST_ASSERT_MSG(false, "don't call action on Repeat Operation");
 }
 
 void RepeatOperation::write(std::ostream &os) const {

@@ -135,6 +135,9 @@ void LogoWindow::perform_operation(Operation &op) {
   if (const auto *rep = dynamic_cast<RepeatOperation *>(&op)) {
     for (int i = 0, cnt = rep->get_cnt(); i < cnt; ++i)
       for (const auto &sub_op : rep->get_ops()) perform_operation(*sub_op);
+  } else if (const auto *cls = dynamic_cast<ClearScreenOperation *>(&op)) {
+    cls->action(*turtle);
+    area.clear();
   } else {
     auto old_pos = turtle->get_position();
     op.action(*turtle);

@@ -30,6 +30,7 @@ class ForwardOperation;
 class BackwardOperation;
 class RightTurnOperation;
 class LeftTurnOperation;
+class ClearScreenOperation;
 
 class Turtle {
   double x = 0;
@@ -40,6 +41,7 @@ class Turtle {
   friend class BackwardOperation;
   friend class RightTurnOperation;
   friend class LeftTurnOperation;
+  friend class ClearScreenOperation;
 
  public:
   Turtle() = default;
@@ -55,6 +57,7 @@ class Turtle {
   void set_x(double mx) { x = mx; }
   void set_y(double my) { y = my; }
   void set_angle(int mangle) { angle = mangle; }
+  void reset() {x = y = angle = 0; }
 };
 
 class Operation {
@@ -118,6 +121,14 @@ class RepeatOperation : public Operation {
   void write(std::ostream &os) const override;
   [[nodiscard]] int get_cnt() const { return cnt; }
   [[nodiscard]] const std::vector<std::unique_ptr<Operation>> &get_ops() const { return ops; }
+};
+
+class ClearScreenOperation : public Operation {
+ public:
+  ClearScreenOperation() = default;
+  ~ClearScreenOperation() override = default;
+  void action(Turtle &turtle) const override { turtle.reset(); }
+  void write(std::ostream &os) const override { os << "CLS"; }
 };
 
 #endif  // __TURTLE_H__
