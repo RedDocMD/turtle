@@ -31,17 +31,25 @@ class BackwardOperation;
 class RightTurnOperation;
 class LeftTurnOperation;
 class ClearScreenOperation;
+class PenOperation;
+
+enum class PenState {
+  Up,
+  Down,
+};
 
 class Turtle {
   double x = 0;
   double y = 0;
   int angle = 0;
+  PenState state = PenState::Down;
 
   friend class ForwardOperation;
   friend class BackwardOperation;
   friend class RightTurnOperation;
   friend class LeftTurnOperation;
   friend class ClearScreenOperation;
+  friend class PenOperation;
 
  public:
   Turtle() = default;
@@ -49,6 +57,7 @@ class Turtle {
   [[nodiscard]] double get_y() const { return y; }
   [[nodiscard]] int get_angle() const { return angle; }
   [[nodiscard]] Point get_position() const { return {x, y}; }
+  [[nodiscard]] bool is_pen_down() const { return state == PenState::Down; }
 
   // 1 unit of LOGO corresponds to SCALE_FACTOR px
   constexpr static int SCALE_FACTOR = 2;
@@ -57,7 +66,8 @@ class Turtle {
   void set_x(double mx) { x = mx; }
   void set_y(double my) { y = my; }
   void set_angle(int mangle) { angle = mangle; }
-  void reset() {x = y = angle = 0; }
+  void set_pen_state(PenState xstate) { state = xstate; }
+  void reset();
 };
 
 class Operation {
@@ -129,6 +139,21 @@ class ClearScreenOperation : public Operation {
   ~ClearScreenOperation() override = default;
   void action(Turtle &turtle) const override { turtle.reset(); }
   void write(std::ostream &os) const override { os << "CLS"; }
+};
+
+enum class PenOperationType {
+  PutUp,
+  PutDown,
+};
+
+class PenOperation : public Operation {
+  PenOperationType type;
+
+ public:
+  explicit PenOperation(PenOperationType type) : type{type} {}
+  ~PenOperation() override = default;
+  void action(Turtle &turtle) const override;
+  void write(std::ostream &os) const override;
 };
 
 #endif  // __TURTLE_H__

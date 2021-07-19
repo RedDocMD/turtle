@@ -48,6 +48,8 @@ Interpreter::CommandType Interpreter::interpret_command_type(
     return CommandType::Repeat;
   else if (comm_name == "CLS")
     return CommandType::Cls;
+  else if (comm_name == "PEN")
+    return CommandType::Pen;
   else
     return CommandType::Error;
 }
@@ -57,7 +59,8 @@ std::unique_ptr<Operation> Interpreter::interpret_single(
   try {
     auto type = interpret_command_type(ss);
     if (type == CommandType::Error) return {};
-    if (type == CommandType::Cls) return std::make_unique<ClearScreenOperation>();
+    if (type == CommandType::Cls)
+      return std::make_unique<ClearScreenOperation>();
 
     std::string tok;
     ss >> tok;
@@ -83,6 +86,13 @@ std::unique_ptr<Operation> Interpreter::interpret_single(
         int angle = boost::lexical_cast<int>(tok);
         return std::make_unique<LeftTurnOperation>(angle);
       }
+      case CommandType::Pen:
+        if (tok == "UP")
+          return std::make_unique<PenOperation>(PenOperationType::PutUp);
+        else if (tok == "DOWN")
+          return std::make_unique<PenOperation>(PenOperationType::PutDown);
+        else
+          return {};
       default:
         BOOST_ASSERT_MSG(type == CommandType::Repeat,
                          "Expected type to be repeat");

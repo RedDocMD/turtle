@@ -145,7 +145,10 @@ void LogoWindow::perform_operation(Operation &op) {
     if (old_pos != new_pos) {
       BOOST_LOG_TRIVIAL(debug)
           << "Position changed from " << old_pos << " to " << new_pos;
-      area.add_line({old_pos, new_pos});
+      if (turtle->is_pen_down()) {
+        BOOST_LOG_TRIVIAL(debug) << "Drawing line";
+        area.add_line({old_pos, new_pos});
+      }
     }
   }
   area.queue_draw();

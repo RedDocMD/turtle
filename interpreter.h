@@ -34,6 +34,7 @@ class Interpreter {
     Lt,
     Repeat,
     Cls,
+    Pen,
     Error,
   };
 

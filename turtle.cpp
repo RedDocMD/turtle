@@ -19,8 +19,8 @@
 
 #include "turtle.h"
 
-#include <cmath>
 #include <boost/assert.hpp>
+#include <cmath>
 
 void ForwardOperation::action(Turtle &turtle) const {
   double old_x = turtle.get_x();
@@ -79,4 +79,33 @@ void RepeatOperation::write(std::ostream &os) const {
 std::ostream &operator<<(std::ostream &os, const Operation &op) {
   op.write(os);
   return os;
+}
+
+void Turtle::reset() {
+  x = y = 0;
+  angle = 0.0;
+  state = PenState::Down;
+}
+
+void PenOperation::action(Turtle &turtle) const {
+  switch (type) {
+    case PenOperationType::PutUp:
+      turtle.set_pen_state(PenState::Up);
+      break;
+    case PenOperationType::PutDown:
+      turtle.set_pen_state(PenState::Down);
+      break;
+  }
+}
+
+void PenOperation::write(std::ostream &os) const {
+  os << "PEN ";
+  switch (type) {
+    case PenOperationType::PutUp:
+      os << "UP";
+      break;
+    case PenOperationType::PutDown:
+      os << "DOWN";
+      break;
+  }
 }
