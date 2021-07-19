@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Turtle VERSION 0.1.0)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 find_package(Boost COMPONENTS log REQUIRED)
 
 set(SOURCES

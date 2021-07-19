@@ -6,13 +6,15 @@
 
 LogoDrawingArea::LogoDrawingArea(std::shared_ptr<Turtle> turtle)
     : turtle{std::move(turtle)} {
-  set_draw_func(sigc::mem_fun(*this, &LogoDrawingArea::on_draw));
   set_size_request(LogoWindow::WIDTH, LogoWindow::HEIGHT);
   set_vexpand(true);
 }
 
-void LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr,
-                              int width, int height) const {
+bool LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+  auto allocation = get_allocation();
+  int width = allocation.get_width();
+  int height = allocation.get_height();
+
   cr->save();
   cr->set_line_width(2.0);
   cr->set_source_rgb(1, 0, 0);
@@ -22,6 +24,8 @@ void LogoDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context> &cr,
   draw_lines(cr, width, height);
   cr->stroke();
   cr->restore();
+
+  return true;
 }
 
 void LogoDrawingArea::draw_turtle(const Cairo::RefPtr<Cairo::Context> &cr,
@@ -70,18 +74,19 @@ void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
 }
 
 LogoWindow::LogoWindow()
-    : vbox(Gtk::Orientation::VERTICAL),
-      hbox(Gtk::Orientation::HORIZONTAL),
+    : vbox(),
+      hbox(),
       run_button("Run"),
       turtle{std::make_shared<Turtle>()},
       area{turtle} {
   set_title("LOGO");
-  set_child(vbox);
+  add(vbox);
 
-  cmd_entry.set_hexpand(true);
   cmd_entry.set_margin_end(15);
   cmd_entry.set_margin_bottom(20);
   cmd_entry.set_margin_start(20);
+  cmd_entry.signal_activate().connect(
+      sigc::mem_fun(*this, &LogoWindow::on_run));
 
   run_button.set_margin_start(15);
   run_button.set_margin_bottom(20);
@@ -89,10 +94,16 @@ LogoWindow::LogoWindow()
   run_button.signal_clicked().connect(
       sigc::mem_fun(*this, &LogoWindow::on_run));
 
-  vbox.append(area);
-  vbox.append(hbox);
-  hbox.append(cmd_entry);
-  hbox.append(run_button);
+  vbox.pack_start(area);
+  area.show();
+  vbox.pack_start(hbox, Gtk::PACK_SHRINK);
+  hbox.pack_start(cmd_entry);
+  cmd_entry.show();
+  hbox.pack_start(run_button, Gtk::PACK_SHRINK);
+  run_button.show();
+  hbox.show();
+  vbox.show();
+  show();
 }
 
 void LogoWindow::perform_operation(Operation &op) {
