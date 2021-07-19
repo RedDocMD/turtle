@@ -74,13 +74,15 @@ void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
 }
 
 LogoWindow::LogoWindow()
-    : vbox(),
-      hbox(),
-      run_button("Run"),
-      turtle{std::make_shared<Turtle>()},
-      area{turtle} {
+    : run_button("Run"), turtle{std::make_shared<Turtle>()}, area{turtle} {
   set_title("LOGO");
-  add(vbox);
+  this->add(vbox);
+
+  area_frame.set_margin_top(20);
+  area_frame.set_margin_bottom(20);
+  area_frame.set_margin_right(20);
+  area_frame.set_margin_left(20);
+  area_frame.set_shadow_type(Gtk::SHADOW_ETCHED_IN);
 
   cmd_entry.set_margin_end(15);
   cmd_entry.set_margin_bottom(20);
@@ -94,8 +96,10 @@ LogoWindow::LogoWindow()
   run_button.signal_clicked().connect(
       sigc::mem_fun(*this, &LogoWindow::on_run));
 
-  vbox.pack_start(area);
+  area_frame.add(area);
+  vbox.pack_start(area_frame);
   area.show();
+  area_frame.show();
   vbox.pack_start(hbox, Gtk::PACK_SHRINK);
   hbox.pack_start(cmd_entry);
   cmd_entry.show();
