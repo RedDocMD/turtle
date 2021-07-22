@@ -116,8 +116,6 @@ LogoWindow::LogoWindow()
       sigc::mem_fun(*this, &LogoWindow::on_entry_changed));
   auto prompt_icon =
       Gdk::Pixbuf::create_from_resource("/window/assets/prompt-arrow.svg");
-  BOOST_LOG_TRIVIAL(info) << "Width = " << prompt_icon->get_width();
-  BOOST_LOG_TRIVIAL(info) << "Height = " << prompt_icon->get_height();
   cmd_entry.set_icon_from_pixbuf(prompt_icon);
 
   run_button.set_margin_start(15);

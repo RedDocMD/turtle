@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="74.491074mm"
+   height="85.740509mm"
+   viewBox="0 0 74.491074 85.740509"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="promp-arrow.svg">
+   sodipodi:docname="prompt-arrow.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="428.56442"
-     inkscape:cy="459.08328"
+     inkscape:zoom="0.7"
+     inkscape:cx="280.23885"
+     inkscape:cy="357.13087"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -34,7 +34,11 @@
      inkscape:window-height="965"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -50,42 +54,42 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-26.054632,-40.886)">
     <path
        sodipodi:type="star"
-       style="fill:#241c1c;stroke:none;stroke-width:0.600001"
-       id="path835"
+       style="fill:#333333;stroke-width:0.600001"
+       id="path833"
        sodipodi:sides="3"
-       sodipodi:cx="47.953136"
-       sodipodi:cy="73.747665"
-       sodipodi:r1="34.547955"
-       sodipodi:r2="17.273977"
-       sodipodi:arg1="0.0083937977"
-       sodipodi:arg2="1.0555913"
+       sodipodi:cx="51.043396"
+       sodipodi:cy="83.89344"
+       sodipodi:r1="49.503067"
+       sodipodi:r2="24.751534"
+       sodipodi:arg1="0.0055425042"
+       sodipodi:arg2="1.0527401"
        inkscape:flatsided="false"
        inkscape:rounded="0"
        inkscape:randomized="0"
-       d="M 82.499874,74.037651 56.464254,88.779337 30.428633,103.52103 30.679768,73.602674 30.930902,43.684321 56.715387,58.860985 Z"
-       inkscape:transform-center-x="-7.9910886"
-       inkscape:transform-center-y="0.040825825"
-       transform="matrix(0.95953355,-0.00982452,0.01038966,0.90734043,0.44833128,4.5050724)" />
+       d="M 100.5457,84.16781 63.300166,105.39716 26.054632,126.62651 26.292243,83.756254 26.529854,40.886 63.537779,62.526906 Z"
+       inkscape:transform-center-x="-12.256771"
+       inkscape:transform-center-y="-0.13718583" />
     <path
        sodipodi:type="star"
-       style="fill:#e6e6e6;stroke:none;stroke-width:0.600001"
-       id="path835-3"
+       style="fill:#ffe680;stroke-width:0.600001"
+       id="path833-3"
        sodipodi:sides="3"
-       sodipodi:cx="47.953136"
-       sodipodi:cy="73.747665"
-       sodipodi:r1="34.547955"
-       sodipodi:r2="17.273977"
-       sodipodi:arg1="0.0083937977"
-       sodipodi:arg2="1.0555913"
+       sodipodi:cx="62.582516"
+       sodipodi:cy="128.64909"
+       sodipodi:r1="49.503067"
+       sodipodi:r2="24.751534"
+       sodipodi:arg1="0.0055425042"
+       sodipodi:arg2="1.0527401"
        inkscape:flatsided="false"
        inkscape:rounded="0"
        inkscape:randomized="0"
-       inkscape:transform-center-x="-4.0490624"
-       inkscape:transform-center-y="0.020686844"
-       transform="matrix(0.48619301,-0.00497805,0.00526441,0.45974691,24.280722,37.242221)"
-       d="M 82.499874,74.037651 56.464254,88.779337 30.428633,103.52103 30.679768,73.602674 30.930902,43.684321 56.715387,58.860985 Z" />
+       inkscape:transform-center-x="-7.5544151"
+       inkscape:transform-center-y="-0.088570469"
+       d="m 112.08482,128.92346 -37.245534,21.22935 -37.245535,21.22935 0.237611,-42.87025 0.237611,-42.870256 37.007926,21.640906 z"
+       transform="matrix(0.61634631,0,0,0.64562721,12.686791,1.7507807)" />
   </g>
 </svg>

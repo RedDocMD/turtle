@@ -26,6 +26,7 @@ add_custom_command(
         MAIN_DEPENDENCY ${GRESOURCE_XML}
         DEPENDS
             assets/logo.svg
+            assets/prompt-arrow.svg
 )
 add_custom_target(
         resources
