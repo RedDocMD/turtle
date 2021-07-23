@@ -19,10 +19,23 @@
 
 #include <gtkmm.h>
 
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+
 #include "top.h"
 
+namespace logging = boost::log;
+
 int main(int argc, char *argv[]) {
-  auto app = Gtk::Application::create(argc, argv, "com.deep.logo");
+#ifdef NDEBUG
+  logging::core::get()->set_filter(logging::trivial::severity >=
+                                   logging::trivial::info);
+#else
+  logging::core::get()->set_filter(logging::trivial::severity >=
+                                   logging::trivial::trace);
+#endif
+
+  auto app = Gtk::Application::create(argc, argv, "org.deep.logo");
   LogoWindow window;
   window.maximize();
   return app->run(window);

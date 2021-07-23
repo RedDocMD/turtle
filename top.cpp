@@ -182,7 +182,7 @@ void LogoWindow::on_run() {
         << "failed to interpret command: \"" << comm << "\"";
     err_label.set_markup(
         "<span foreground='red' weight='bold' font='12'>Invalid "
-        "command</span>");
+        "command!</span>");
   }
 }
 
