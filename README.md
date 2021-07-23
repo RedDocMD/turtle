@@ -43,8 +43,12 @@ to their correct destinations.
 | BK | distance (integer) | Move turtle backward |
 | RT | angle (integer, degrees) | Turn turtle clockwise |
 | LT | angle (integer, degrees) | Turn turtle anti-clockwise |
+| REPEAT | Explained below | Repeat a set of statements
 | CLS | - | Clear screen |
 | PEN | UP/DOWN | Draw lines/Don't draw lines |
+
+#### REPEAT command
+Syntax: `REPEAT <count> (<command> [,<command>]*)`
 
 ### Others
 

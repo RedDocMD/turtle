@@ -94,7 +94,7 @@ void LogoDrawingArea::draw_lines(const Cairo::RefPtr<Cairo::Context> &cr,
 
 LogoWindow::LogoWindow()
     : run_button("Run"), turtle{std::make_shared<Turtle>()}, area{turtle} {
-  set_title("LOGO");
+  set_title("Turtle");
   auto vbox = Gtk::make_managed<Gtk::VBox>();
   auto hbox = Gtk::make_managed<Gtk::HBox>();
   auto area_frame = Gtk::make_managed<Gtk::Frame>();
