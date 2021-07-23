@@ -24,8 +24,7 @@ echo "[Desktop Entry]" > $DESKTOP_FILE
   echo "Type=Application"
   echo "Name=${NAME}"
   echo "Comment=A simple LOGO implementation"
-  echo "TryExec=\"GTK_THEME=Adwaita:light ${PWD}/turtle\""
-  echo "Exec=\"GTK_THEME=Adwaita:light ${PWD}/turtle\""
+  echo "Exec=env GTK_THEME=Adwaita:light ${PWD}/turtle"
   echo "Icon=${REPO_DIR}/assets/logo.svg"
 } >> $DESKTOP_FILE
 
