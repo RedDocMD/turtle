@@ -34,20 +34,9 @@ add_custom_target(
             ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C}
 )
 
-
-set(SOURCES
-        top.cpp
-        top.h
-        turtle.cpp
-        turtle.h
-        geom.h
-        geom.cpp
-        interpreter.h
-        interpreter.cpp
-        )
-add_executable(turtle ${SOURCES} main.cpp ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+add_subdirectory(src)
+add_executable(turtle main.cpp ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C} PROPERTIES GENERATED TRUE)
 add_dependencies(turtle resources)
 target_compile_options(turtle PRIVATE -Wall -pedantic)
-target_link_libraries(turtle PRIVATE ${GTKMM_LIBRARIES} ${Boost_LIBRARIES})
-target_include_directories(turtle PRIVATE ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+target_link_libraries(turtle PRIVATE libturtle)
