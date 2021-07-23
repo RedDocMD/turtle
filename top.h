@@ -22,6 +22,8 @@
 
 #include <gtkmm.h>
 
+#include <algorithm>
+#include <boost/log/trivial.hpp>
 #include <memory>
 #include <vector>
 
@@ -49,6 +51,42 @@ class LogoDrawingArea : public Gtk::DrawingArea {
   std::vector<Line> lines;
 };
 
+class CommandStack {
+  std::vector<std::string> stack;
+  size_t curr;
+
+ public:
+  CommandStack() : stack{""}, curr{0} {}
+  ~CommandStack() = default;
+  [[nodiscard]] const std::string &curr_command() const { return stack[curr]; }
+  void move_up() {
+    if (curr > 0) --curr;
+  }
+  void move_down() {
+    if (curr < stack.size() - 1) ++curr;
+  }
+  void push() {
+    if (curr != stack.size() - 1) {
+      stack.pop_back();
+      stack.push_back(stack[curr]);
+    }
+    stack.emplace_back("");
+    curr = stack.size() - 1;
+  }
+  void update_curr(std::string new_comm) { stack[curr] = std::move(new_comm); }
+  void dump() {
+    std::string str = "[";
+    for (auto i = 0UL; i < stack.size(); ++i) {
+      if (i == curr) str += "{";
+      str += "\"" + stack[i] + "\"";
+      if (i == curr) str += "}";
+      if (i != stack.size() - 1) str += ", ";
+    }
+    str += "]";
+    BOOST_LOG_TRIVIAL(trace) << str;
+  }
+};
+
 class LogoWindow : public Gtk::Window {
  public:
   LogoWindow();
@@ -60,6 +98,7 @@ class LogoWindow : public Gtk::Window {
   void perform_operation(Operation &op);
   void on_run();
   void on_entry_changed();
+  bool on_entry_key_release_event(GdkEventKey *key);
 
   Gtk::Button run_button;
   Gtk::Entry cmd_entry;
@@ -67,6 +106,7 @@ class LogoWindow : public Gtk::Window {
 
   std::shared_ptr<Turtle> turtle;
   LogoDrawingArea area;
+  CommandStack stack;
 };
 
 #endif  // __TOP_H__

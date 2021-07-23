@@ -117,6 +117,8 @@ LogoWindow::LogoWindow()
   auto prompt_icon =
       Gdk::Pixbuf::create_from_resource("/window/assets/prompt-arrow.svg");
   cmd_entry.set_icon_from_pixbuf(prompt_icon);
+  cmd_entry.signal_key_release_event().connect(
+      sigc::mem_fun(*this, &LogoWindow::on_entry_key_release_event));
 
   run_button.set_margin_start(15);
   run_button.set_margin_bottom(20);
@@ -187,4 +189,23 @@ void LogoWindow::on_run() {
 void LogoWindow::on_entry_changed() {
   auto text = cmd_entry.get_text();
   cmd_entry.set_text(text.uppercase());
+}
+
+bool LogoWindow::on_entry_key_release_event(GdkEventKey *key) {
+  if (key->keyval == GDK_KEY_Up) {
+    BOOST_LOG_TRIVIAL(trace) << "Up";
+    stack.move_up();
+    cmd_entry.set_text(stack.curr_command());
+  } else if (key->keyval == GDK_KEY_Down) {
+    BOOST_LOG_TRIVIAL(trace) << "Down";
+    stack.move_down();
+    cmd_entry.set_text(stack.curr_command());
+  } else if (key->keyval == GDK_KEY_Return) {
+    BOOST_LOG_TRIVIAL(trace) << "Return";
+    stack.push();
+  } else {
+    stack.update_curr(cmd_entry.get_text());
+  }
+  stack.dump();
+  return true;
 }
