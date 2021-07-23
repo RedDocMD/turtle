@@ -12,8 +12,8 @@ Take a walk down the memory lane ...
 
 Turtle requires the following to be built:
 - CMake (>= 3.10)
-- make or ninja  
-- gcc or clang
+- make  
+- gcc
 - gtkmm-3.0
 - Boost (>= 1.70)
 
