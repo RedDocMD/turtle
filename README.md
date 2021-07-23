@@ -37,4 +37,23 @@ to their correct destinations.
 
 ### Commands
 
+| Command | Parameter | Action |
+| ------- | --------- | ------ |
+| FD | distance (integer) | Move turtle forward |
+| BK | distance (integer) | Move turtle backward |
+| RT | angle (integer, degrees) | Turn turtle clockwise |
+| LT | angle (integer, degrees) | Turn turtle anti-clockwise |
+| CLS | - | Clear screen |
+| PEN | UP/DOWN | Draw lines/Don't draw lines |
+
 ### Others
+
+- Hitting Return is same as pressing the run button
+- Pressing Up/Down arrow moves one through the **command history**
+
+### License
+Copyright (c) 2021 Deep Majumder
+
+Turtle is made available under the GNU General Public License v2.0
+
+You can view the license [here](https://github.com/RedDocMD/turtle/blob/main/LICENSE)
