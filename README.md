@@ -6,6 +6,8 @@ Take a walk down the memory lane ...
 
 ## Demo
 
+![demo](assets/turtle-fast-screencast.gif)
+
 ## Installing
 
 ### Dependencies
